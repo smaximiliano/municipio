@@ -1,13 +1,26 @@
 package bd2.tp4.utility;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import bd2.tp4.entity.Categoria;
 
 
 public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tp4");
-		System.out.println("asd");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		
+		Categoria categoria = new Categoria("catJPA", 80000);
+		
+		em.persist(categoria);
+		em.getTransaction().commit();
+		
+		em.close();
+		entityManagerFactory.close();
+		
 /*
 		Facade f = new FacadeImpl();
 
