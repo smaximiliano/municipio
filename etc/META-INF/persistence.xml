@@ -8,6 +8,11 @@
 	<persistence-unit name="tp4" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 	<class>b2.tp4.entity.Categoria</class>
+	<class>b2.tp4.entity.Ciudadano</class>
+	<class>b2.tp4.entity.Reclamo</class>
+	<class>b2.tp4.entity.Canje</class>
+	<class>b2.tp4.entity.Evento</class>
+	<class>b2.tp4.entity.Producto</class>
 	<properties>
 		<property name="hibernate.connection.url" value="jdbc:derby:tp4db;create=true" />
 		<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect" />

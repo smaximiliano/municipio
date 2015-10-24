@@ -1,10 +1,13 @@
 package bd2.tp4.utility;
 
+import java.sql.Date;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import bd2.tp4.entity.Categoria;
+import bd2.tp4.entity.Ciudadano;
 
 
 public class Main {
@@ -14,10 +17,13 @@ public class Main {
 		em.getTransaction().begin();
 		
 		Categoria categoria = new Categoria("catJPA", 80000);
-		
 		em.persist(categoria);
-		em.getTransaction().commit();
 		
+		Ciudadano ciudadano = new Ciudadano("maxi", "sosa", "37150835", "maxsos92@gmail.com");
+		ciudadano.crearReclamo(new Date(System.currentTimeMillis()), "reclamo blah blah", "Buenos Aires 334", categoria);
+		em.persist(ciudadano);
+		
+		em.getTransaction().commit();
 		em.close();
 		entityManagerFactory.close();
 		

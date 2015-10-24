@@ -31,7 +31,7 @@ public class ProductoDAOImpl extends GenericDAOImpl<Producto>{
 		month = (month == 12) ? 1: month + 1;
 		java.sql.Date maxDate = parsearFecha("1/"+month+"/"+year);
 
-		Criteria criteria = session.createCriteria(Ciudadano.class);
+		Criteria criteria = entityManager.createCriteria(Ciudadano.class);
 		criteria.createCriteria("reclamosRealizados").add(Restrictions.between("fecha", minDate, maxDate));
 		List<Ciudadano> ciudadanos = criteria.list();
 		List<Producto> productos = new ArrayList<Producto>();

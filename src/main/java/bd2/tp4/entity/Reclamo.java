@@ -4,12 +4,26 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
 public class Reclamo {
+	@Id
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private Date fecha;
 	private String descripcion;
 	private String direccion;
+	@OneToMany
 	private Set<Evento> eventos;
+	@ManyToOne
 	private Categoria categoria;
 
 	private static final String MSG_ERROR_EVENTO_NO_ENCONTRADO = "Evento no encontrado, descripcion y fecha:";

@@ -4,20 +4,35 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import bd2.tp4.utility.CanjeUtil;
 
+@Entity
 public class Ciudadano {
 
 	private static final int MULTIPLICADOR_BONUS = 2;
 	private static final int MES_BONUS = 8;
 	private static final String MSG_ERROR_RECLAMO_NO_ENCONTRADO = "Reclamo no encontrado... Fecha, descripcion y direccion:";
 	private static final String MSG_ERROR_CANJE_NO_ENCONTRADO = "Canje no encontrado... Descripcion de producto y fecha:";
+	
+	@Id
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 	private String nombre;
 	private String apellido;
 	private String dni;
 	private String email;
+	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Reclamo> reclamosRealizados;
+	@OneToMany
 	private Set<Canje> canjes;
 	private int puntajeTotal;
 
@@ -26,13 +41,13 @@ public class Ciudadano {
 	}
 
 	public Ciudadano(String nombre, String apellido, String dni,
-			String email, int puntajeTotal) {
+			String email) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
 		this.email = email;
-		this.puntajeTotal = puntajeTotal;
+		this.puntajeTotal = 0;
 		reclamosRealizados = new HashSet<Reclamo>();
 		canjes = new HashSet<Canje>();
 	}

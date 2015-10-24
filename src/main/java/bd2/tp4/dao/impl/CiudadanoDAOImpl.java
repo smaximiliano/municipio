@@ -19,13 +19,13 @@ public class CiudadanoDAOImpl extends GenericDAOImpl<Ciudadano> {
 
 	@SuppressWarnings("unchecked")
 	public List<Ciudadano> getCiudadanosQueCanjearon(Producto producto, Date dia){
-		Criteria criteria = session.createCriteria(Ciudadano.class);
+		Criteria criteria = entityManager.createCriteria(Ciudadano.class);
 		criteria.createCriteria("canjes").add(Restrictions.eq("producto", producto)).add(Restrictions.eq("fecha", dia));
 		return criteria.list();
 	}
 	@SuppressWarnings("unchecked")
 	public List<Ciudadano> getCiudadanosQueGeneraronReclamosConCategoria(Categoria categoria){
-		Criteria criteria = session.createCriteria(Ciudadano.class);
+		Criteria criteria = entityManager.createCriteria(Ciudadano.class);
 		criteria.createCriteria("reclamosRealizados").add(Restrictions.eq("categoria", categoria));
 		return criteria.list();
 	}
