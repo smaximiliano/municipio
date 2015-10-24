@@ -1,15 +1,16 @@
 package bd2.tp4.utility;
 
 import java.sql.Date;
+import java.util.Iterator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import bd2.tp4.entity.Canje;
 import bd2.tp4.entity.Categoria;
 import bd2.tp4.entity.Ciudadano;
 import bd2.tp4.entity.Producto;
+import bd2.tp4.entity.Reclamo;
 
 
 public class Main {
@@ -31,6 +32,14 @@ public class Main {
 		em.persist(ciudadano);
 		
 		
+		Iterator it = ciudadano.getReclamosRealizados().iterator();
+		Reclamo reclamo = null;
+		if (it.hasNext()){
+			reclamo = (Reclamo) it.next();
+			reclamo.crearEvento("evento abc", new Date(System.currentTimeMillis()));
+		}
+		
+		em.persist(reclamo);
 		
 		
 		em.getTransaction().commit();

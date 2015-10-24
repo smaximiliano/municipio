@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class Reclamo {
 	private Date fecha;
 	private String descripcion;
 	private String direccion;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Evento> eventos;
 	@ManyToOne
 	private Categoria categoria;
