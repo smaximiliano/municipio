@@ -32,7 +32,7 @@ public class Ciudadano {
 	private String email;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Reclamo> reclamosRealizados;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Canje> canjes;
 	private int puntajeTotal;
 

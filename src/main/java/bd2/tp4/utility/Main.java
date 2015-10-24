@@ -6,8 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import bd2.tp4.entity.Canje;
 import bd2.tp4.entity.Categoria;
 import bd2.tp4.entity.Ciudadano;
+import bd2.tp4.entity.Producto;
 
 
 public class Main {
@@ -21,7 +23,15 @@ public class Main {
 		
 		Ciudadano ciudadano = new Ciudadano("maxi", "sosa", "37150835", "maxsos92@gmail.com");
 		ciudadano.crearReclamo(new Date(System.currentTimeMillis()), "reclamo blah blah", "Buenos Aires 334", categoria);
+		
+		Producto producto = new Producto("producto A", 100);
+		em.persist(producto);
+		
+		ciudadano.canjear(producto);
 		em.persist(ciudadano);
+		
+		
+		
 		
 		em.getTransaction().commit();
 		em.close();
