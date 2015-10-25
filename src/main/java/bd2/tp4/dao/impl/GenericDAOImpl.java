@@ -5,10 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Example;
-
 import bd2.tp4.dao.GenericDAO;
 
 public class GenericDAOImpl<T> implements GenericDAO<T> {
@@ -24,7 +20,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 	}
 
 	public T findById(String id) {
-		T entity = (T) entityManager.load(persistentClass, id);
+		T entity = (T) entityManager.find(persistentClass, id);
 		return entity;
 	}
 
@@ -33,17 +29,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 		return entityManager.createQuery( "from "+persistentClass.getName(), persistentClass).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<T> findByExample(T exampleInstance, String[] excludeProperty) {
-		Criteria crit = entityManager.createCriteria(persistentClass);
-		Example example = Example.create(exampleInstance);
-		for (String exclude : excludeProperty) {
-			example.excludeProperty(exclude);
-		}
-		crit.add(example);
-		return crit.list();
-	}
-
+	
 	@Override
 	public T makePersistent(T entity) {
 		entityManager.persist(entity);
@@ -55,13 +41,13 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 		entityManager.remove(entity);
 	}
 
-	public void flush() {
-		entityManager.flush();
+	@Override
+	public void update(T entity) {
+		entityManager.merge(entity);
+		
 	}
 
-	public void clear() {
-		entityManager.clear();
-	}
+	
 
 
 }
