@@ -41,13 +41,4 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 		entityManager.remove(entity);
 	}
 
-	@Override
-	public void update(T entity) {
-		entityManager.merge(entity);
-		
-	}
-
-	
-
-
 }

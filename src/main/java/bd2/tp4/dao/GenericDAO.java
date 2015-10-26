@@ -11,5 +11,4 @@ public interface GenericDAO<T> {
 
 	void makeTransient(T entity);
 
-	void update(T entity);
 }
