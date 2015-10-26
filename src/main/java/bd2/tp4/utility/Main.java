@@ -43,7 +43,7 @@ public class Main {
 		ciudadanoDAO.makePersistent(ciudadano);
 		
 		
-		Iterator it = ciudadano.getReclamosRealizados().iterator();
+		Iterator<Reclamo> it = ciudadano.getReclamosRealizados().iterator();
 		Reclamo reclamo = null;
 		if (it.hasNext()){
 			reclamo = (Reclamo) it.next();
