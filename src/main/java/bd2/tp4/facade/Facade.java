@@ -51,10 +51,4 @@ public interface Facade {
 
 	List<ProductoDTO> obtenerProductos();
 
-	List<CiudadanoDTO> getCiudadanosQueCanjearon(String idProducto, Date fecha);
-
-	List<CiudadanoDTO> getCiudadanosQueGeneraronReclamosConCategoria(String idCategoria);
-
-	List<ProductoDTO> getProductosCanjeadosPorCiudadanosQueIniciaronReclamosEn(int month, int year);
-
 }
