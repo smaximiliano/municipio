@@ -6,7 +6,6 @@ import java.util.List;
 import bd2.tp4.dto.CanjeDTO;
 import bd2.tp4.dto.CategoriaDTO;
 import bd2.tp4.dto.CiudadanoDTO;
-import bd2.tp4.dto.EventoDTO;
 import bd2.tp4.dto.ProductoDTO;
 import bd2.tp4.dto.ReclamoDTO;
 
@@ -33,15 +32,9 @@ public interface Facade {
 
 	public List<ReclamoDTO> traerReclamos();
 
-	public List<ReclamoDTO> traerReclamos(String idciudadano);
-
-	List<EventoDTO> traerEventos(String idReclamo);
-
 	void agregarEvento(String idReclamo, String descripcion, Date fecha);
 
 	void canjear(String idCiudadano, String idProducto);
-
-	List<CanjeDTO> listarCanjes(String idCiudadano);
 
 	List<CanjeDTO> listarCanjes();
 

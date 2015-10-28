@@ -15,13 +15,13 @@ import bd2.tp4.dao.impl.ReclamoDAOImpl;
 import bd2.tp4.dto.CanjeDTO;
 import bd2.tp4.dto.CategoriaDTO;
 import bd2.tp4.dto.CiudadanoDTO;
-import bd2.tp4.dto.EventoDTO;
 import bd2.tp4.dto.ProductoDTO;
 import bd2.tp4.dto.ReclamoDTO;
 import bd2.tp4.entity.Canje;
 import bd2.tp4.entity.Categoria;
 import bd2.tp4.entity.Ciudadano;
 import bd2.tp4.entity.Evento;
+import bd2.tp4.entity.Municipio;
 import bd2.tp4.entity.Producto;
 import bd2.tp4.entity.Reclamo;
 import bd2.tp4.facade.Facade;
@@ -29,9 +29,10 @@ import bd2.tp4.utility.HibernateUtil;
 
 public class FacadeImpl implements Facade {
 
+	private static final String MUNICIPIO_ID = "1";
 	private GenericDAO<Categoria> categoriaDAO;
-	private CiudadanoDAOImpl ciudadanoDAO;
-	private ProductoDAOImpl productoDAO;
+	private GenericDAO<Ciudadano> ciudadanoDAO;
+	private GenericDAO<Producto> productoDAO;
 	private GenericDAO<Canje> canjeDAO;
 	private GenericDAO<Reclamo> reclamoDAO;
 	private GenericDAO<Evento> eventoDAO;
@@ -88,9 +89,11 @@ public class FacadeImpl implements Facade {
 			entityManager = HibernateUtil.getEntityManagerFactory()
 					.createEntityManager();
 			entityManager.getTransaction().begin();
+			Municipio m = entityManager.find(Municipio.class, MUNICIPIO_ID);
 			ciudadanoDAO = new CiudadanoDAOImpl(entityManager);
 			Ciudadano ciudadano = new Ciudadano(nombre, apellido, dni, email);
 			ciudadanoDAO.makePersistent(ciudadano);
+			m.addCiudadano(ciudadano);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
@@ -260,8 +263,15 @@ public class FacadeImpl implements Facade {
 			entityManager = HibernateUtil.getEntityManagerFactory()
 					.createEntityManager();
 			entityManager.getTransaction().begin();
-			Ciudadano ciudadano = ciudadanoDAO.findById(id);
-			ciudadanoDAO.makeTransient(ciudadano);
+			ciudadanoDAO = new CiudadanoDAOImpl(entityManager);
+			Municipio m = entityManager.find(Municipio.class, MUNICIPIO_ID);
+			Ciudadano ciudadano = null;
+			for (Ciudadano c : m.getCiudadanos())
+				if (c.getId().equals(id)) {
+					ciudadano = c;
+					break;
+				}
+			m.removeCiudadano(ciudadano);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
@@ -296,26 +306,22 @@ public class FacadeImpl implements Facade {
 	}
 
 	@Override
-	public List<ReclamoDTO> traerReclamos(String idciudadano) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<EventoDTO> traerEventos(String idReclamo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<CanjeDTO> listarCanjes(String idCiudadano) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void bajaProducto(String idProducto) {
-		// TODO Auto-generated method stub
-
+		try {
+			entityManager = HibernateUtil.getEntityManagerFactory()
+					.createEntityManager();
+			entityManager.getTransaction().begin();
+			productoDAO = new ProductoDAOImpl(entityManager);
+			Producto producto = productoDAO.findById(idProducto);
+			if (producto == null)
+				throw (new RuntimeException(
+						"Producto a eliminar no encontrado " + idProducto));
+			productoDAO.makeTransient(producto);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			entityManager.close();
+		}
 	}
 }

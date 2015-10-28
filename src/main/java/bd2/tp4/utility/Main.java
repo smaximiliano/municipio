@@ -12,11 +12,12 @@ import bd2.tp4.facade.impl.FacadeImpl;
 
 
 public class Main {
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args){
 		
 		Facade f = new FacadeImpl();
-
+		
 		f.nuevoCiudadano("maximiliano", "sosa", "37150835", "maxsos92@gmail.com");
+		f.nuevoCiudadano("flaquito", "aveggio", "33123321", "jpaveggio@gmail.com");
 		f.agregarProducto("productoASD", 50);
 		f.nuevaCategoria("categoria ABC", 23000);
 
@@ -68,6 +69,8 @@ public class Main {
 		f.agregarEvento(idReclamo,"evento 1", new Date(System.currentTimeMillis()));
 
 		f.modificarCategoria(idCategoria, "Cat ASD", 98765);
+		
+		f.bajaCiudadano(idCiudadano);
 		HibernateUtil.getEntityManagerFactory().close();
 
 	}

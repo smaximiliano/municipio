@@ -13,6 +13,7 @@
 	<class>b2.tp4.entity.Canje</class>
 	<class>b2.tp4.entity.Evento</class>
 	<class>b2.tp4.entity.Producto</class>
+	<class>b2.tp4.entity.Municipio</class>
 	<properties>
 		<property name="hibernate.connection.url" value="jdbc:derby:tp4db;create=true" />
 		<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect" />
